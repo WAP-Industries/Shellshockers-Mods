@@ -47,7 +47,7 @@
 // @match        *://yolk.rocks/*
 // @match        *://yolk.tech/*
 // @match        *://zygote.cafe/*
-// @icon         https://i.ibb.co/vkmzKdk/eggcheong-front.png
+// @icon         https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/logo.png
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
@@ -141,8 +141,8 @@ window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
                     return plane
                 }
                 
-                const p1 = create_plane("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Eggcheong-Mod/main/eggcheong-front.png")
-                const p2 = create_plane("https://i.ibb.co/bmYRmrr/eggcheong-back.png")
+                const p1 = create_plane("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/front.png")
+                const p2 = create_plane("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/back.png")
                 p2.position.z = -0.01
                 
                 player.modded = true
