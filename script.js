@@ -136,9 +136,6 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
 
 };
 
-
-const Meshes = []
-
 const onUpdateFuncName = btoa(Math.random().toString(32));
 
 window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
@@ -149,15 +146,8 @@ window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
 			const player = players[i]
 			if (!player || player===myPlayer) continue
 			
-            if (!player.avatar){
-				player.actor.mesh.dispose()
-				player.actor.mesh = new BABYLON.MeshBuilder.CreateBox('', { 
-					width: 0, 
-					height: 0, 
-					depth: 0
-				}, player.actor.scene);
-				player.actor.mesh.material = new BABYLON.StandardMaterial("", player.actor.scene)
-				player.actor.mesh.material.alpha = 0
+            if (!player.modded){
+				player.actor.bodyMesh.setEnabled(false)
 
 				function createplane(image){
 					const material = new BABYLON.StandardMaterial("", player.actor.scene)
@@ -182,7 +172,7 @@ window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
 				const p2 = createplane("https://i.ibb.co/bmYRmrr/eggcheong-back.png")
 				p2.position.z = -0.01
 
-				player.avatar = true
+				player.modded = true
             }
 		}
 
