@@ -115,11 +115,18 @@ window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
         //}
 
         if (!model){
-            BABYLON.SceneLoader.ImportMesh("", 
-                "https://raw.githubusercontent.com/BabylonJS/MeshesLibrary/master/", 
-                "PBR_Spheres.glb", 
-            myPlayer.actor.scene);
-            model = true
+            
+            // okay for some reason this works perfectly if its running locally
+            // but it doesnt work when running in shellshock.io
+            BABYLON.SceneLoader.ImportMesh(
+                "", 
+                "https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Phallic%20Gun/", 
+                "model.glb", 
+                myPlayer.actor.scene, 
+                function(meshes){
+
+                }
+            );
         }
 
 
