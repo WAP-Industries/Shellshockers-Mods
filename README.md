@@ -12,4 +12,4 @@
 ---
 
 ### Credits
-Script injection: [](https://greasyfork.org/en/scripts/436330-shellshock-io-aimbot-esp)
+Script injection: https://greasyfork.org/en/scripts/436330-shellshock-io-aimbot-esp
