@@ -73,7 +73,7 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
                 cullFuncName = /=([a-zA-Z_$]+)\(this\.mesh,\.[0-9]+\)/.exec(code)[1];
             } 
             catch (error) {
-                alert('Script failed to inject.');
+                alert('Script failed to inject');
                 return code;
             }
 
