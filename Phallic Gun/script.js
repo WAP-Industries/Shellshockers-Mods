@@ -105,11 +105,23 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
 
 const onUpdateFuncName = btoa(Math.random().toString(32));
 
-const model = 
+let model = null
+const link = "https://github.com/WAP-Industries/Shellshockers-Mods/raw/main/Phallic%20Gun/model.glb"
 
 window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
     try{
-        myPlayer.weapons[0].actor.gunMesh.setEnabled(false)
+        // if (myPlayer.weapons[0].actor.gunMesh!==model){
+        //     myPlayer.weapons[0].actor.gunMesh.dispose()
+        //}
+
+        if (!model){
+            BABYLON.SceneLoader.ImportMesh("", 
+                "https://raw.githubusercontent.com/BabylonJS/MeshesLibrary/master/", 
+                "PBR_Spheres.glb", 
+            myPlayer.actor.scene);
+            model = true
+        }
+
 
         console.log("mod is running")
     }
