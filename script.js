@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         idk yet
+// @name         Shellshockers Eggcheong mod
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  the shell do be shocking
@@ -47,7 +47,7 @@
 // @match        *://yolk.rocks/*
 // @match        *://yolk.tech/*
 // @match        *://zygote.cafe/*
-// @icon         https://www.google.com/s2/favicons?domain=shellshock.io
+// @icon         https://i.ibb.co/vkmzKdk/eggcheong-front.png
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
@@ -111,9 +111,9 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
 
 			return code.replace(sceneVarName + '.render()', `
 
-					window[ '${onUpdateFuncName}' ]( 
-						${babylonVarName}, 
-						${playersVarName}, 
+					window[ '${onUpdateFuncName}' ](
+						${babylonVarName},
+						${playersVarName},
 						${myPlayerVarName}
 					);
 
