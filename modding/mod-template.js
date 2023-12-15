@@ -1,7 +1,6 @@
 // ==UserScript==
 // @name         Shellshock Modding Template
 // @namespace    http://tampermonkey.net/
-// @version      0.1
 // @match        *://shellshock.io/*
 // @match        *://algebra.best/*
 // @match        *://algebra.vip/*
