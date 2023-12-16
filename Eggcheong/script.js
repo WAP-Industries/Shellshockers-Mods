@@ -1,9 +1,6 @@
 // ==UserScript==
-// @name         Shellshockers Eggcheong mod
+// @name         Shellshock Modding Template
 // @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  the shell do be shocking
-// @author       WAP Industries
 // @match        *://shellshock.io/*
 // @match        *://algebra.best/*
 // @match        *://algebra.vip/*
@@ -47,7 +44,6 @@
 // @match        *://yolk.rocks/*
 // @match        *://yolk.tech/*
 // @match        *://zygote.cafe/*
-// @icon         https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/logo.png
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
@@ -77,7 +73,7 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
                 cullFuncName = /=([a-zA-Z_$]+)\(this\.mesh,\.[0-9]+\)/.exec(code)[1];
             } 
             catch (error) {
-                alert('Script failed to inject. Report the issue to the script developer.\n' + JSON.stringify(getVars(), undefined, 2));
+                alert(`Script failed to inject\nMissing: ${Object.keys(getVars()).filter(i=>!getVars()[i])[0]}`);
                 return code;
             }
 
@@ -105,56 +101,11 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
     }
 }
 
-const materials = {}
 
 const onUpdateFuncName = btoa(Math.random().toString(32));
 
 window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
-    try {
-        for (const player of players) {
-            if (!player || player === myPlayer) continue
-            
-            if (!player.modded) {
-                player.actor.bodyMesh.setEnabled(false)
-                
-                function create_plane(image) {
-                    if (!materials[image]){
-                        materials[image] = function(){
-                            const m = new BABYLON.StandardMaterial("", player.actor.scene)
-                            m.emissiveColor = new BABYLON.Color3.White()
-                            m.specularColor = new BABYLON.Color3(0, 0, 0);
-                            m.diffuseTexture = new BABYLON.Texture(image, player.actor.scene)
-                            m.diffuseTexture.hasAlpha = true
-                            m.useAlphaFromDiffuseTexture = true
-                            return m 
-                        }()
-                    }
-                    
-                    const plane = BABYLON.MeshBuilder.CreatePlane("", {	
-                        width: 0.5,
-                        height: 0.75,
-                        sideOrientation: BABYLON.Mesh.DOUBLESIDE
-                    })
-                    plane.material = materials[image]
-                    plane.position.y = 0.4
-                    plane.parent = player.actor.mesh
-                    return plane
-                }
-                
-                const p1 = create_plane("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/front.png")
-                const p2 = create_plane("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/back.png")
-                p2.position.z = -0.01
-                
-                player.modded = true
-            }
-        }
-        
-        // if this doesnt print to the console something fucked up somewhere
-        console.log("mod is running")
-    }
-    catch (err) {
-        console.log(err)
-    }
-}
+    
+    // code goes here
 
-delete localStorage[ 'lastVersionPlayed' ];
+}
