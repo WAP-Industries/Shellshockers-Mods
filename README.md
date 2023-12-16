@@ -22,4 +22,5 @@
 ---
 
 ### Credits
+https://www.zertalious.xyz/how-was-the-shellshock-io-cheat-made/
 https://greasyfork.org/en/scripts/436330-shellshock-io-aimbot-esp
