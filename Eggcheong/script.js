@@ -71,7 +71,7 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
             
             try {
                 babylonVarName = /this\.origin=new ([a-zA-Z]+)\.Vector3/.exec(code)[1];
-                playersVarName = /([^,]+)=\[\],[^,]+=\[\],{}/.exec(code)[1];
+                playersVarName = /([^,]+)=\[\],[^,]+=\[\],[^,]+=-1,vueApp.game.respawnTime=0/.exec(code)[1];
                 myPlayerVarName = /"fire":document.pointerLockElement&&([^&]+)&&/.exec(code)[1];
                 sceneVarName = /createMapCells\(([^,]+),/.exec(code)[1];
                 cullFuncName = /=([a-zA-Z_$]+)\(this\.mesh,\.[0-9]+\)/.exec(code)[1];
@@ -156,3 +156,5 @@ window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
         console.log(err)
     }
 }
+
+delete localStorage[ 'lastVersionPlayed' ];
