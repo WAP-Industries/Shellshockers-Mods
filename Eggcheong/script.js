@@ -130,8 +130,6 @@ window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
                 player.modded = true
             }
         }
-
-        console.log("mod is running")
     }
     catch (err) {
         console.log(err)
