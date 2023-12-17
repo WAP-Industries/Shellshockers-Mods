@@ -76,7 +76,7 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
             console.log('%cScript injected', 'color: red; background: black; font-size: 2em;', variables);
 
             return code.replace(variables.scene + '.render()', `
-                    window[ '${onUpdateFuncName}'](${variables.babylon},${variables.players},${variables.myPlayer});
+                    window['${onUpdateFuncName}'](${variables.babylon},${variables.players},${variables.myPlayer});
                     ${variables.scene}.render()`)
                 .replace(`function ${variables.cullFunc}`, `
                     function ${variables.cullFunc}() {return true;}
@@ -91,7 +91,7 @@ const materials = {}
 
 const onUpdateFuncName = btoa(Math.random().toString(32));
 
-window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
+window[onUpdateFuncName] = function(BABYLON, players, myPlayer){
     try {
         for (const player of players) {
             if (!player || player===myPlayer) continue
