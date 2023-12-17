@@ -1,9 +1,7 @@
 // ==UserScript==
 // @name         Shellshockers Eggcheong mod
-// @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  the shell do be shocking
 // @author       WAP Industries
+// @namespace    http://tampermonkey.net/
 // @match        *://shellshock.io/*
 // @match        *://algebra.best/*
 // @match        *://algebra.vip/*
@@ -54,7 +52,7 @@
 
 window.XMLHttpRequest = class extends window.XMLHttpRequest {
     open(method, url) {
-        if (url.indexOf('shellshock.js') > - 1) 
+        if (url.indexOf('shellshock.js') > - 1)
             this.isScript = true;
         return super.open(...arguments);
     }
@@ -78,7 +76,7 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
             console.log('%cScript injected', 'color: red; background: black; font-size: 2em;', variables);
 
             return code.replace(variables.scene + '.render()', `
-                    window[ '${onUpdateFuncName}'](${variables.babylon},${variables.players},${variables.myPlayer}); 
+                    window[ '${onUpdateFuncName}'](${variables.babylon},${variables.players},${variables.myPlayer});
                     ${variables.scene}.render()`)
                 .replace(`function ${variables.cullFunc}`, `
                     function ${variables.cullFunc}() {return true;}
@@ -97,10 +95,10 @@ window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
     try {
         for (const player of players) {
             if (!player || player===myPlayer) continue
-            
+
             if (!player.modded) {
                 player.actor.bodyMesh.setEnabled(false)
-                
+
                 function create_plane(image) {
                     if (!materials[image]){
                         materials[image] = function(){
@@ -110,11 +108,11 @@ window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
                             m.diffuseTexture = new BABYLON.Texture(image, player.actor.scene)
                             m.diffuseTexture.hasAlpha = true
                             m.useAlphaFromDiffuseTexture = true
-                            return m 
+                            return m
                         }()
                     }
-                    
-                    const plane = BABYLON.MeshBuilder.CreatePlane("", {	
+
+                    const plane = BABYLON.MeshBuilder.CreatePlane("", {
                         width: 0.5,
                         height: 0.75,
                         sideOrientation: BABYLON.Mesh.DOUBLESIDE
@@ -124,15 +122,15 @@ window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
                     plane.parent = player.actor.mesh
                     return plane
                 }
-                
+
                 const p1 = create_plane("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/front.png")
                 const p2 = create_plane("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/back.png")
                 p2.position.z = -0.01
-                
+
                 player.modded = true
             }
         }
-        
+
         console.log("mod is running")
     }
     catch (err) {
