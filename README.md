@@ -13,12 +13,9 @@
 
 ### Notes
 - Code troubleshooting
-  - If you don't see any changes after running the script, reload the page
-  - To check if the script is running correctly, open the JavaScript console and check if `mod is running` is being outputted
+  - If you don't see any changes after running the script, try reloading the page
 - Personal modding
-  - If you want to mod Shellshockers as well (don't), the `modding` directory contains stuff that will ease the process.
-  - `mod-template.js` is boilerplate code for your project
-  - `shellshockers-source-code.js` contains the game's source code for reference
+  - If you want to mod Shellshockers as well (don't), the `references` directory contains some useful stuff.
 ---
 
 ### Credits
