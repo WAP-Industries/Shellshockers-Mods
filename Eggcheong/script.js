@@ -63,42 +63,25 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
         if (this.isScript){
             const code = super.response
 
-            let babylonVarName,
-                playersVarName,
-                myPlayerVarName,
-                sceneVarName,
-                cullFuncName;
-            
-            try {
-                babylonVarName = /this\.origin=new ([a-zA-Z]+)\.Vector3/.exec(code)[1];
-                playersVarName = /([^,]+)=\[\],[^,]+=\[\],[^,]+=-1,vueApp.game.respawnTime=0/.exec(code)[1];
-                myPlayerVarName = /"fire":document.pointerLockElement&&([^&]+)&&/.exec(code)[1];
-                sceneVarName = /createMapCells\(([^,]+),/.exec(code)[1];
-                cullFuncName = /=([a-zA-Z_$]+)\(this\.mesh,\.[0-9]+\)/.exec(code)[1];
-            } 
-            catch (error) {
-                
-                alert(`Script failed to inject\nMissing: ${Object.keys(getVars()).filter(i=>!getVars()[i])[0]}`);
-                return code;
+            const variables = {
+                babylon: /this\.origin=new ([a-zA-Z]+)\.Vector3/.exec(code),
+                players: /([^,]+)=\[\],[^,]+=\[\],[^,]+=-1,vueApp.game.respawnTime=0/.exec(code),
+                myPlayer: /"fire":document.pointerLockElement&&([^&]+)&&/.exec(code),
+                scene: /createMapCells\(([^,]+),/.exec(code),
+                cullFunc: /=([a-zA-Z_$]+)\(this\.mesh,\.[0-9]+\)/.exec(code)
             }
 
-            function getVars(){
-                return {
-                    babylonVarName,
-                    playersVarName,
-                    myPlayerVarName,
-                    playersVarName,
-                    sceneVarName,
-                    cullFuncName
-                };
-            }
-            console.log('%cInjecting code...', 'color: red; background: black; font-size: 2em;', getVars());
+            if (Object.values(variables).filter(i=>!i).length)
+                return void alert(`Script failed to inject\n\nVariables missing:\n${Object.keys(variables).filter(i=>!variables[i]).join('\n')}`)
 
-            return code.replace(sceneVarName + '.render()', `
-                    window[ '${onUpdateFuncName}'](${babylonVarName},${playersVarName},${myPlayerVarName}); 
-                    ${sceneVarName}.render()`)
-                .replace(`function ${cullFuncName}`, `
-                    function ${cullFuncName}() {return true;}
+            Object.keys(variables).forEach(i=>variables[i] = variables[i][1])
+            console.log('%cScript injected', 'color: red; background: black; font-size: 2em;', variables);
+
+            return code.replace(variables.scene + '.render()', `
+                    window[ '${onUpdateFuncName}'](${variables.babylon},${variables.players},${variables.myPlayer}); 
+                    ${variables.scene}.render()`)
+                .replace(`function ${variables.cullFunc}`, `
+                    function ${variables.cullFunc}() {return true;}
                     function someFunctionWhichWillNeverBeUsedNow`);
         }
 
