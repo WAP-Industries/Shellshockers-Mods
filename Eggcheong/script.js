@@ -96,7 +96,7 @@ const onUpdateFuncName = btoa(Math.random().toString(32));
 window[onUpdateFuncName] = function (BABYLON, players, myPlayer) {
     try {
         for (const player of players) {
-            if (!player || player === myPlayer) continue
+            if (!player || player===myPlayer) continue
             
             if (!player.modded) {
                 player.actor.bodyMesh.setEnabled(false)
