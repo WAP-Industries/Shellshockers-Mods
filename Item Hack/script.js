@@ -75,23 +75,15 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
             )
             .replace(
                 `console.log("startGame()");`,
-                `console.log("startGame()"); window['${funcname}'](${variables.game});`,
+                `
+                    console.log("startGame()"); 
+                    vueApp.$refs.equipScreen.$refs.weapon_select.selectClass(
+                        CharClass[${variables.game}.playerAccount.getPrimaryWeapon().category_name.replace(" Primary Weapons", "")]
+                    );
+                `,
             )
         }
 
         return super.response
-    }
-}
-
-const funcname = btoa(Math.random().toString(32))
-
-window[funcname] = function(game){
-    try{
-        vueApp.$refs.equipScreen.$refs.weapon_select.selectClass(
-            CharClass[game.playerAccount.getPrimaryWeapon().category_name.replace(" Primary Weapons", "")]
-        );
-    }
-    catch(err){
-        console.log(err)
     }
 }
