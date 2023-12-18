@@ -69,7 +69,7 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
                 cullFunc: /=([a-zA-Z_$]+)\(this\.mesh,\.[0-9]+\)/.exec(code)?.[1]
             }
 
-            if (Object.values(variables).filter(i=>!i).length)
+            if (Object.values(variables).some(i=>!i))
                 return void alert(`Script failed to inject\n\nVariables missing:\n${Object.keys(variables).filter(i=>!variables[i]).join('\n')}`)
 
             console.log('%cScript injected', 'color: red; background: black; font-size: 2em;', variables);
