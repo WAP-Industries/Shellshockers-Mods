@@ -60,17 +60,16 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
             const code = super.response
 
             const variables = {
-                babylon: /this\.origin=new ([a-zA-Z]+)\.Vector3/.exec(code),
-                players: /([^,]+)=\[\],[^,]+=\[\],[^,]+=-1,vueApp.game.respawnTime=0/.exec(code),
-                myPlayer: /"fire":document.pointerLockElement&&([^&]+)&&/.exec(code),
-                scene: /createMapCells\(([^,]+),/.exec(code),
-                cullFunc: /=([a-zA-Z_$]+)\(this\.mesh,\.[0-9]+\)/.exec(code)
+                babylon: /this\.origin=new ([a-zA-Z]+)\.Vector3/.exec(code)?.[1],
+                players: /([^,]+)=\[\],[^,]+=\[\],[^,]+=-1,vueApp.game.respawnTime=0/.exec(code)?.[1],
+                myPlayer: /"fire":document.pointerLockElement&&([^&]+)&&/.exec(code)?.[1],
+                scene: /createMapCells\(([^,]+),/.exec(code)?.[1],
+                cullFunc: /=([a-zA-Z_$]+)\(this\.mesh,\.[0-9]+\)/.exec(code)?.[1]
             }
 
             if (Object.values(variables).filter(i=>!i).length)
                 return void alert(`Script failed to inject\n\nVariables missing:\n${Object.keys(variables).filter(i=>!variables[i]).join('\n')}`)
 
-            Object.keys(variables).forEach(i=>variables[i] = variables[i][1])
             console.log('%cScript injected', 'color: red; background: black; font-size: 2em;', variables);
 
             return code.replace(variables.scene + '.render()', `
