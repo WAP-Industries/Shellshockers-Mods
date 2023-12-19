@@ -83,25 +83,21 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
     }
 }
 
-let mod_texture = null
-
 const onUpdateFuncName = btoa(Math.random().toString(32));
 
 window[onUpdateFuncName] = function(BABYLON, scene){
     try{
         const mesh = scene.getMeshByID("skyBox")
 
-        if (mesh.material.diffuseTexture!==mod_texture){
-            if (!mod_texture){
-                mod_texture = function(){
-                    const t = new BABYLON.Texture(
-                        "https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Skybox%20Mod/texture.png", 
-                        scene
-                    )
-                    t.wrapU = t.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;
-                    return t
-                }()
-            }
+        if (!scene.modded){
+            const mod_texture = function(){
+                const t = new BABYLON.Texture(
+                    "https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Skybox%20Mod/texture.png", 
+                    scene
+                )
+                t.wrapU = t.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;
+                return t
+            }()
             
             mesh.material.diffuseTexture = mod_texture
 
@@ -129,6 +125,8 @@ window[onUpdateFuncName] = function(BABYLON, scene){
                 uvs[i+5] = uvs[i+7] = 1
             }
             mesh.setVerticesData(BABYLON.VertexBuffer.UVKind, uvs);
+            
+            scene.modded = true
         }
     }
     catch(err){
