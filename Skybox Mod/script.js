@@ -83,19 +83,52 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
     }
 }
 
-const material_name = "ifuckinghateblackniggers"
+let mod_texture = null
 
 const onUpdateFuncName = btoa(Math.random().toString(32));
 
 window[onUpdateFuncName] = function(BABYLON, scene){
     try{
         const mesh = scene.getMeshByID("skyBox")
-        
-        if (mesh.material?.name!=material_name){
-            mesh.material.diffuseTexture = 
 
-            mesh.material.name = material_name
-            console.warn("skybox material set")
+        if (mesh.material.diffuseTexture!==mod_texture){
+            if (!mod_texture){
+                mod_texture = function(){
+                    const t = new BABYLON.Texture(
+                        "https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Skybox%20Mod/texture.png", 
+                        scene
+                    )
+                    t.wrapU = t.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;
+                    return t
+                }()
+            }
+            
+            mesh.material.diffuseTexture = mod_texture
+
+            mesh.material.diffuseTexture.hasAlpha = true
+            mesh.material.useAlphaFromDiffuseTexture = true
+            mesh.material.emissiveColor = new BABYLON.Color3.White()
+            mesh.material.specularColor = new BABYLON.Color3.Black()
+            mesh.material.reflectionTexture = null
+
+            const uvs = mesh.getVerticesData(BABYLON.VertexBuffer.UVKind)
+            const faces = [
+                [0  , 0.2],
+                [0.4, 0.6],
+                [0.6, 0.8],
+                [0.6, 0.8],
+                [0.8, 1  ],
+                [0.8, 1  ],
+            ]
+
+            for (let i=0;i<48;i+=8){
+                uvs[i+2] = uvs[i+4] = faces[i/8][0]
+                uvs[i] = uvs[i+6] = faces[i/8][1]
+                
+                uvs[i+1] = uvs[i+3] = 0
+                uvs[i+5] = uvs[i+7] = 1
+            }
+            mesh.setVerticesData(BABYLON.VertexBuffer.UVKind, uvs);
         }
     }
     catch(err){
