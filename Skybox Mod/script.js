@@ -105,7 +105,7 @@ window[onUpdateFuncName] = function(BABYLON, scene){
             mesh.material.useAlphaFromDiffuseTexture = true
             mesh.material.emissiveColor = new BABYLON.Color3.White()
             mesh.material.specularColor = new BABYLON.Color3.Black()
-            mesh.material.reflectionTexture = null
+            mesh.material.reflectionTexture.level = 0
 
             const uvs = mesh.getVerticesData(BABYLON.VertexBuffer.UVKind)
             const faces = [
