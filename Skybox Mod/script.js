@@ -109,12 +109,12 @@ window[onUpdateFuncName] = function(BABYLON, scene){
 
             const uvs = mesh.getVerticesData(BABYLON.VertexBuffer.UVKind)
             const faces = [
-                [0  , 0.2],
+                [0.0, 0.2],
                 [0.4, 0.6],
                 [0.6, 0.8],
                 [0.6, 0.8],
-                [0.8, 1  ],
-                [0.8, 1  ],
+                [0.8, 1.0],
+                [0.8, 1.0],
             ]
 
             for (let i=0;i<48;i+=8){
