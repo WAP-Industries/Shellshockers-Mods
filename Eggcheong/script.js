@@ -86,7 +86,6 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
     }
 }
 
-const materials = {}
 
 const onUpdateFuncName = btoa(Math.random().toString(32));
 
@@ -99,24 +98,21 @@ window[onUpdateFuncName] = function(BABYLON, players, myPlayer){
                 player.actor.bodyMesh.setEnabled(false)
 
                 function create_plane(image) {
-                    if (!materials[image]){
-                        materials[image] = function(){
-                            const m = new BABYLON.StandardMaterial("", player.actor.scene)
-                            m.emissiveColor = new BABYLON.Color3.White()
-                            m.specularColor = new BABYLON.Color3(0, 0, 0);
-                            m.diffuseTexture = new BABYLON.Texture(image, player.actor.scene)
-                            m.diffuseTexture.hasAlpha = true
-                            m.useAlphaFromDiffuseTexture = true
-                            return m
-                        }()
-                    }
+                    const material = function(){
+                        const m = new BABYLON.StandardMaterial("", player.actor.scene)
+                        m.emissiveColor = new BABYLON.Color3.White()
+                        m.diffuseTexture = new BABYLON.Texture(image, player.actor.scene)
+                        m.diffuseTexture.hasAlpha = true
+                        m.useAlphaFromDiffuseTexture = true
+                        return m
+                    }()
 
                     const plane = BABYLON.MeshBuilder.CreatePlane("", {
                         width: 0.5,
                         height: 0.75,
                         sideOrientation: BABYLON.Mesh.DOUBLESIDE
                     })
-                    plane.material = materials[image]
+                    plane.material = material
                     plane.position.y = 0.4
                     plane.parent = player.actor.mesh
                     return plane
