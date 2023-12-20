@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Shokam Shellshockers Datapack
+// @name         Shellshockers Eggcheong mod
 // @author       WAP Industries
 // @namespace    http://tampermonkey.net/
 // @match        *://shellshock.io/*
@@ -45,29 +45,14 @@
 // @match        *://yolk.rocks/*
 // @match        *://yolk.tech/*
 // @match        *://zygote.cafe/*
+// @icon         https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/logo.png
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
 
-function changeTheme(){
-    const css = `
-        * {
-            --ss-lightoverlay: url("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/themes/load_screen.jpg");
-            background-size: 100% 100%;
-        }
-
-        :root{
-            --ss-lightoverlay: url("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/themes/home_screen.jpg");
-            background-size: 100% 100%;
-        }
-    `
-    document.head.innerHTML+=`<style>${css}</style>`
-}
-(()=>(document.body ? changeTheme() : document.addEventListener("DOMContentLoaded", e=>changeTheme())))()
-
 window.XMLHttpRequest = class extends window.XMLHttpRequest {
     open(method, url) {
-        if (url.indexOf('shellshock.js') > - 1) 
+        if (url.indexOf('shellshock.js') > - 1)
             this.isScript = true;
         return super.open(...arguments);
     }
@@ -90,7 +75,7 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
             console.log('%cScript injected', 'color: red; background: black; font-size: 2em;', variables);
 
             return code.replace(variables.scene + '.render()', `
-                    window['${onUpdateFuncName}'](${variables.babylon},${variables.players},${variables.myPlayer}); 
+                    window['${onUpdateFuncName}'](${variables.babylon},${variables.players},${variables.myPlayer});
                     ${variables.scene}.render()`)
                 .replace(`function ${variables.cullFunc}`, `
                     function ${variables.cullFunc}() {return true;}
@@ -101,98 +86,47 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
     }
 }
 
+
 const onUpdateFuncName = btoa(Math.random().toString(32));
 
-function changeSky(BABYLON, scene){
-    const mesh = scene.getMeshByID("skyBox")
-    
-    if (!scene.modded){
-        const mod_texture = function(){
-            const t = new BABYLON.Texture(
-                "https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/sky/texture.png", 
-                scene
-            )
-            t.wrapU = t.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;
-            return t
-        }()
-        
-        mesh.material.diffuseTexture = mod_texture
+window[onUpdateFuncName] = function(BABYLON, players, myPlayer){
+    try {
+        for (const player of players) {
+            if (!player || player===myPlayer) continue
 
-        mesh.material.diffuseTexture.hasAlpha = true
-        mesh.material.useAlphaFromDiffuseTexture = true
-        mesh.material.emissiveColor = new BABYLON.Color3.White()
-        mesh.material.reflectionTexture = null
+            if (!player.modded) {
+                player.actor.bodyMesh.setEnabled(false)
 
-        const uvs = mesh.getVerticesData(BABYLON.VertexBuffer.UVKind)
-        const faces = [
-            [0.0, 0.2],
-            [0.4, 0.6],
-            [0.6, 0.8],
-            [0.6, 0.8],
-            [0.8, 1.0],
-            [0.8, 1.0],
-        ]
-
-        for (let i=0;i<48;i+=8){
-            uvs[i+2] = uvs[i+4] = faces[i/8][0]
-            uvs[i] = uvs[i+6] = faces[i/8][1]
-            
-            uvs[i+1] = uvs[i+3] = 0
-            uvs[i+5] = uvs[i+7] = 1
-        }
-        mesh.setVerticesData(BABYLON.VertexBuffer.UVKind, uvs);
-        
-        scene.modded = true
-    }
-}
-
-const materials = {}
-function changePlayers(BABYLON, players){
-    for (const player of players){
-        if (!player) continue
-
-        if (!player.modded) {
-            player.actor.bodyMesh.setEnabled(false)
-
-            function create_plane(image) {
-                if (!materials[image]){
-                    materials[image] = function(){
+                function create_plane(image) {
+                    const material = function(){
                         const m = new BABYLON.StandardMaterial("", player.actor.scene)
                         m.emissiveColor = new BABYLON.Color3.White()
-                        m.specularColor = new BABYLON.Color3(0, 0, 0);
                         m.diffuseTexture = new BABYLON.Texture(image, player.actor.scene)
                         m.diffuseTexture.hasAlpha = true
                         m.useAlphaFromDiffuseTexture = true
                         return m
                     }()
+
+                    const plane = BABYLON.MeshBuilder.CreatePlane("", {
+                        width: 0.5,
+                        height: 0.75,
+                        sideOrientation: BABYLON.Mesh.DOUBLESIDE
+                    })
+                    plane.material = material
+                    plane.position.y = 0.4
+                    plane.parent = player.actor.mesh
+                    return plane
                 }
 
-                const plane = BABYLON.MeshBuilder.CreatePlane("", {
-                    width: 0.5,
-                    height: 0.75,
-                    sideOrientation: BABYLON.Mesh.DOUBLESIDE
-                })
-                plane.material = materials[image]
-                plane.position.y = 0.4
-                plane.parent = player.actor.mesh
-                return plane
+                const p1 = create_plane("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/front.png")
+                const p2 = create_plane("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/back.png")
+                p2.position.z = -0.01
+
+                player.modded = true
             }
-
-            const p1 = create_plane("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/front.png")
-            const p2 = create_plane("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/back.png")
-            p2.position.z = -0.01
-
-            player.modded = true
         }
     }
-}
-
-window[onUpdateFuncName] = function(BABYLON, players, myPlayer){
-    try{
-        changeSky(BABYLON, myPlayer.actor.scene)
-        changePlayers(BABYLON, players.filter(i=>i!=myPlayer))
-    }
-    catch(err){
+    catch (err) {
         console.log(err)
     }
 }
