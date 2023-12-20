@@ -47,6 +47,7 @@
 // @match        *://zygote.cafe/*
 // @grant        none
 // @run-at       document-start
+// @icon         https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/logo.jpg
 // ==/UserScript==
 
 function changeTheme(){
