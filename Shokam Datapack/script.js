@@ -1,84 +1,198 @@
 // ==UserScript==
-// @name         Christmas ShellShockers!
+// @name         Shokam Shellshockers Datapack
+// @author       WAP Industries
 // @namespace    http://tampermonkey.net/
-// @version      0.3
-// @description  It's ShellShockers but Christmas Themed!
-// @icon         https://cdn.discordapp.com/attachments/1145628256368865341/1173865657448808530/stsmall507x507-pad600x600f8f8f8.png?ex=65658296&is=65530d96&hm=95c70daf0c6278bcc66c44b4b1b11f18374f39d03bccbebc3aa443c7a5b2d9fa&
-// @author       Lei
-// @match        https://shellshock.io/*
-// @match        https://staging.shellshock.io/*
-// @match        https://dev.shellshock.io/*
-// @match        https://algebra.best/*
-// @match        https://algebra.vip/*
-// @match        https://biologyclass.club/*
-// @match        https://deadlyegg.com/*
-// @match        https://deathegg.world/*
-// @match        https://egg.dance/*
-// @match        https://eggboy.club/*
-// @match        https://eggboy.xyz/*
-// @match        https://eggcombat.com/*
-// @match        https://eggfacts.fun/*
-// @match        https://egghead.institute/*
-// @match        https://eggisthenewblack.com/*
-// @match        https://eggsarecool.com/*
-// @match        https://eggshooter.best/*
-// @match        https://geometry.best/*
-// @match        https://geometry.monster/*
-// @match        https://geometry.pw/*
-// @match        https://geometry.report/*
-// @match        https://hardboiled.life/*
-// @match        https://hardshell.life/*
-// @match        https://humanorganising.org/*
-// @match        https://mathactivity.xyz/*
-// @match        https://mathdrills.info/*
-// @match        https://mathdrills.life/*
-// @match        https://mathfun.rocks/*
-// @match        https://mathgames.world/*
-// @match        https://math.international/*
-// @match        https://mathlete.fun/*
-// @match        https://mathlete.pro/*
-// @match        https://new.shellshock.io/*
-// @match        https://overeasy.club/*
-// @match        https://scrambled.best/*
-// @match        https://scrambled.tech/*
-// @match        https://scrambled.today/*
-// @match        https://scrambled.us/*
-// @match        https://scrambled.world/*
-// @match        https://shellsocks.com/*
-// @match        https://shellshockers.club/*
-// @match        https://shellshockers.site/*
-// @match        https://shellshockers.us/*
-// @match        https://shellshockers.world/*
-// @match        https://shellshockers.xyz/*
-// @match        https://softboiled.club/*
-// @match        https://urbanegger.com/*
-// @match        https://violentegg.club/*
-// @match        https://violentegg.fun/*
-// @match        https://yolk.best/*
-// @match        https://yolk.life/*
-// @match        https://yolk.quest/*
-// @match        https://yolk.rocks/*
-// @match        https://yolk.tech/*
-// @match        https://yolk.today/*
-// @match        https://zygote.cafe/*
+// @match        *://shellshock.io/*
+// @match        *://algebra.best/*
+// @match        *://algebra.vip/*
+// @match        *://biologyclass.club/*
+// @match        *://deadlyegg.com/*
+// @match        *://deathegg.world/*
+// @match        *://eggcombat.com/*
+// @match        *://egg.dance/*
+// @match        *://eggfacts.fun/*
+// @match        *://egghead.institute/*
+// @match        *://eggisthenewblack.com/*
+// @match        *://eggsarecool.com/*
+// @match        *://geometry.best/*
+// @match        *://geometry.monster/*
+// @match        *://geometry.pw/*
+// @match        *://geometry.report/*
+// @match        *://hardboiled.life/*
+// @match        *://hardshell.life/*
+// @match        *://humanorganising.org/*
+// @match        *://mathdrills.info/*
+// @match        *://mathfun.rocks/*
+// @match        *://mathgames.world/*
+// @match        *://math.international/*
+// @match        *://mathlete.fun/*
+// @match        *://mathlete.pro/*
+// @match        *://overeasy.club/*
+// @match        *://scrambled.best/*
+// @match        *://scrambled.tech/*
+// @match        *://scrambled.today/*
+// @match        *://scrambled.us/*
+// @match        *://scrambled.world/*
+// @match        *://shellshockers.club/*
+// @match        *://shellshockers.site/*
+// @match        *://shellshockers.us/*
+// @match        *://shellshockers.world/*
+// @match        *://softboiled.club/*
+// @match        *://violentegg.club/*
+// @match        *://violentegg.fun/*
+// @match        *://yolk.best/*
+// @match        *://yolk.life/*
+// @match        *://yolk.rocks/*
+// @match        *://yolk.tech/*
+// @match        *://zygote.cafe/*
 // @grant        none
-// @downloadURL https://update.greasyfork.org/scripts/481198/Christmas%20ShellShockers%21.user.js
-// @updateURL https://update.greasyfork.org/scripts/481198/Christmas%20ShellShockers%21.meta.js
+// @run-at       document-start
 // ==/UserScript==
 
 function changeTheme(){
     const css = `
         * {
-            --ss-lightoverlay: url(https://fc.sinaimg.cn/large/008clOHAgy1gn02td27vdj30ku0vagpc.jpg);
+            --ss-lightoverlay: url("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/themes/load_screen.jpg");
             background-size: 100% 100%;
         }
 
         :root{
-            --ss-lightoverlay: url(https://fc.sinaimg.cn/large/008clOHAgy1gn02td27vdj30ku0vagpc.jpg);
+            --ss-lightoverlay: url("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/themes/home_screen.jpg");
             background-size: 100% 100%;
         }
     `
     document.head.innerHTML+=`<style>${css}</style>`
 }
-
 (()=>(document.body ? changeTheme() : document.addEventListener("DOMContentLoaded", e=>changeTheme())))()
+
+window.XMLHttpRequest = class extends window.XMLHttpRequest {
+    open(method, url) {
+        if (url.indexOf('shellshock.js') > - 1) 
+            this.isScript = true;
+        return super.open(...arguments);
+    }
+
+    get response(){
+        if (this.isScript){
+            const code = super.response
+
+            const variables = {
+                babylon: /this\.origin=new ([a-zA-Z]+)\.Vector3/.exec(code)?.[1],
+                players: /([^,]+)=\[\],[^,]+=\[\],[^,]+=-1,vueApp.game.respawnTime=0/.exec(code)?.[1],
+                myPlayer: /"fire":document.pointerLockElement&&([^&]+)&&/.exec(code)?.[1],
+                scene: /createMapCells\(([^,]+),/.exec(code)?.[1],
+                cullFunc: /=([a-zA-Z_$]+)\(this\.mesh,\.[0-9]+\)/.exec(code)?.[1]
+            }
+
+            if (Object.values(variables).some(i=>!i))
+                return void alert(`Script failed to inject\n\nVariables missing:\n${Object.keys(variables).filter(i=>!variables[i]).join('\n')}`)
+
+            console.log('%cScript injected', 'color: red; background: black; font-size: 2em;', variables);
+
+            return code.replace(variables.scene + '.render()', `
+                    window['${onUpdateFuncName}'](${variables.babylon},${variables.players},${variables.myPlayer}); 
+                    ${variables.scene}.render()`)
+                .replace(`function ${variables.cullFunc}`, `
+                    function ${variables.cullFunc}() {return true;}
+                    function someFunctionWhichWillNeverBeUsedNow`);
+        }
+
+        return super.response
+    }
+}
+
+const onUpdateFuncName = btoa(Math.random().toString(32));
+
+function changeSky(BABYLON, scene){
+    const mesh = scene.getMeshByID("skyBox")
+    
+    if (!scene.modded){
+        const mod_texture = function(){
+            const t = new BABYLON.Texture(
+                "https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/sky/texture.png", 
+                scene
+            )
+            t.wrapU = t.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;
+            return t
+        }()
+        
+        mesh.material.diffuseTexture = mod_texture
+
+        mesh.material.diffuseTexture.hasAlpha = true
+        mesh.material.useAlphaFromDiffuseTexture = true
+        mesh.material.emissiveColor = new BABYLON.Color3.White()
+        mesh.material.reflectionTexture = null
+
+        const uvs = mesh.getVerticesData(BABYLON.VertexBuffer.UVKind)
+        const faces = [
+            [0.0, 0.2],
+            [0.4, 0.6],
+            [0.6, 0.8],
+            [0.6, 0.8],
+            [0.8, 1.0],
+            [0.8, 1.0],
+        ]
+
+        for (let i=0;i<48;i+=8){
+            uvs[i+2] = uvs[i+4] = faces[i/8][0]
+            uvs[i] = uvs[i+6] = faces[i/8][1]
+            
+            uvs[i+1] = uvs[i+3] = 0
+            uvs[i+5] = uvs[i+7] = 1
+        }
+        mesh.setVerticesData(BABYLON.VertexBuffer.UVKind, uvs);
+        
+        scene.modded = true
+    }
+}
+
+const materials = {}
+function changePlayers(BABYLON, players){
+    for (const player of players){
+        if (!player) continue
+
+        if (!player.modded) {
+            player.actor.bodyMesh.setEnabled(false)
+
+            function create_plane(image) {
+                if (!materials[image]){
+                    materials[image] = function(){
+                        const m = new BABYLON.StandardMaterial("", player.actor.scene)
+                        m.emissiveColor = new BABYLON.Color3.White()
+                        m.specularColor = new BABYLON.Color3(0, 0, 0);
+                        m.diffuseTexture = new BABYLON.Texture(image, player.actor.scene)
+                        m.diffuseTexture.hasAlpha = true
+                        m.useAlphaFromDiffuseTexture = true
+                        return m
+                    }()
+                }
+
+                const plane = BABYLON.MeshBuilder.CreatePlane("", {
+                    width: 0.5,
+                    height: 0.75,
+                    sideOrientation: BABYLON.Mesh.DOUBLESIDE
+                })
+                plane.material = materials[image]
+                plane.position.y = 0.4
+                plane.parent = player.actor.mesh
+                return plane
+            }
+
+            const p1 = create_plane("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/front.png")
+            const p2 = create_plane("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Eggcheong/back.png")
+            p2.position.z = -0.01
+
+            player.modded = true
+        }
+    }
+}
+
+window[onUpdateFuncName] = function(BABYLON, players, myPlayer){
+    try{
+        changeSky(BABYLON, myPlayer.actor.scene)
+        changePlayers(BABYLON, players.filter(i=>i!=myPlayer))
+    }
+    catch(err){
+        console.log(err)
+    }
+}
