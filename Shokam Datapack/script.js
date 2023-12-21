@@ -81,7 +81,8 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
                 players: /([^,]+)=\[\],[^,]+=\[\],[^,]+=-1,vueApp.game.respawnTime=0/.exec(code)?.[1],
                 myPlayer: /"fire":document.pointerLockElement&&([^&]+)&&/.exec(code)?.[1],
                 scene: /createMapCells\(([^,]+),/.exec(code)?.[1],
-                cullFunc: /=([a-zA-Z_$]+)\(this\.mesh,\.[0-9]+\)/.exec(code)?.[1]
+                cullFunc: /=([a-zA-Z_$]+)\(this\.mesh,\.[0-9]+\)/.exec(code)?.[1],
+                audioIndex: /"death_scream"\+([^,]+)/.exec(code)?.[1]
             }
 
             if (Object.values(variables).some(i=>!i))
@@ -89,7 +90,23 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
 
             console.log('%cScript injected', 'color: red; background: black; font-size: 2em;', variables);
 
-            return code.replace(variables.scene + '.render()', `
+            return code.replace(
+                `console.log("startGame()");`,
+                `
+                    console.log("startGame()");
+                    (async ()=>{
+                        await window.BAWK.loadSound(
+                            "https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/audio/death.wav",
+                            "shokam_scream"
+                        );
+                    })();
+                `,
+            )
+                .replace(
+                    `"death_scream"+${variables.audioIndex}`,
+                    `"shokam_scream"`                
+                )
+                .replace(variables.scene + '.render()', `
                     window['${onUpdateFuncName}'](${variables.babylon},${variables.players},${variables.myPlayer}); 
                     ${variables.scene}.render()`)
                 .replace(`function ${variables.cullFunc}`, `
@@ -102,7 +119,7 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
 }
 
 
-const onUpdateFuncName = btoa(Math.random().toString(32));
+const onUpdateFuncName = btoa(Math.random().toString(32))
 
 function changeSky(BABYLON, scene){
     const mesh = scene.getMeshByID("skyBox")
