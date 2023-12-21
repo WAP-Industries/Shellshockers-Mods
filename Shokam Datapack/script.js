@@ -91,17 +91,17 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
             console.log('%cScript injected', 'color: red; background: black; font-size: 2em;', variables);
 
             return code.replace(
-                `console.log("startGame()");`,
-                `
-                    console.log("startGame()");
-                    (async ()=>{
-                        await window.BAWK.loadSound(
-                            "https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/audio/death.wav",
-                            "shokam_scream"
-                        );
-                    })();
-                `,
-            )
+                    `console.log("startGame()");`,
+                    `
+                        console.log("startGame()");
+                        (async ()=>{
+                            await window.BAWK.loadSound(
+                                "https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/audio/death.wav",
+                                "shokam_scream"
+                            );
+                        })();
+                    `,
+                )
                 .replace(
                     `"death_scream"+${variables.audioIndex}`,
                     `"shokam_scream"`                
