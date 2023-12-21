@@ -90,21 +90,13 @@ window[onUpdateFuncName] = function(BABYLON, scene){
         const mesh = scene.getMeshByID("skyBox")
 
         if (!scene.modded){
-            const mod_texture = function(){
-                const t = new BABYLON.Texture(
-                    "https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Skybox%20Mod/texture.png", 
-                    scene
-                )
-                t.wrapU = t.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;
-                return t
-            }()
-            
-            mesh.material.diffuseTexture = mod_texture
-
+            mesh.material.diffuseTexture = new BABYLON.Texture(
+                "https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Skybox%20Mod/texture.png", 
+                scene
+            )
             mesh.material.diffuseTexture.hasAlpha = true
             mesh.material.useAlphaFromDiffuseTexture = true
             mesh.material.emissiveColor = new BABYLON.Color3.White()
-            mesh.material.specularColor = new BABYLON.Color3.Black()
             mesh.material.reflectionTexture.level = 0
 
             const uvs = mesh.getVerticesData(BABYLON.VertexBuffer.UVKind)
