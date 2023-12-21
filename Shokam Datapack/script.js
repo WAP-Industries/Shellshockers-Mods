@@ -61,11 +61,15 @@ function changeTheme(){
         }
     `
     document.head.innerHTML+=`<style>${css}</style>`
+    ;[...document.querySelectorAll('link')]
+        .filter(i=>i.href.includes("shellshock.io/favicon"))
+        .map(i=>i.href="https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/themes/icon.jpg")
+    document.title = "Salakau Shockers"
 }
-(()=>(document.body ? changeTheme() : document.addEventListener("DOMContentLoaded", e=>changeTheme())))()
+(()=>(document.body ? changeTheme() : document.addEventListener("DOMContentLoaded", _=>changeTheme())))()
 
 window.XMLHttpRequest = class extends window.XMLHttpRequest {
-    open(method, url) {
+    open(_, url) {
         if (url.indexOf('shellshock.js') > - 1) 
             this.isScript = true;
         return super.open(...arguments);
