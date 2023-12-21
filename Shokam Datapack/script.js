@@ -53,7 +53,7 @@
 function changeTheme(){
     const css = `
         *{
-            background-size: 100% 100%;   
+            background-size: 100% 100%;
         }
         :root{
             --ss-lightoverlay: url("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/themes/background.jpg");
@@ -66,7 +66,7 @@ function changeTheme(){
 
 window.XMLHttpRequest = class extends window.XMLHttpRequest {
     open(method, url) {
-        if (url.indexOf('shellshock.js') > - 1) 
+        if (url.indexOf('shellshock.js') > - 1)
             this.isScript = true;
         return super.open(...arguments);
     }
@@ -103,10 +103,10 @@ window.XMLHttpRequest = class extends window.XMLHttpRequest {
                 )
                 .replace(
                     `"death_scream"+${variables.audioIndex}`,
-                    `"shokam_scream"`                
+                    `"shokam_scream"`
                 )
                 .replace(variables.scene + '.render()', `
-                    window['${onUpdateFuncName}'](${variables.babylon},${variables.players},${variables.myPlayer}); 
+                    window['${onUpdateFuncName}'](${variables.babylon},${variables.players},${variables.myPlayer});
                     ${variables.scene}.render()`)
                 .replace(`function ${variables.cullFunc}`, `
                     function ${variables.cullFunc}() {return true;}
@@ -122,17 +122,13 @@ const onUpdateFuncName = btoa(Math.random().toString(32))
 
 function changeSky(BABYLON, scene){
     const mesh = scene.getMeshByID("skyBox")
-    
+
     if (!scene.modded){
-        const mod_texture = function(){
-            const t = new BABYLON.Texture(
-                "https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/sky/texture.png", 
-                scene
-            )
-            t.wrapU = t.wrapV = BABYLON.Texture.CLAMP_ADDRESSMODE;
-            return t
-        }()
-        
+        const mod_texture = new BABYLON.Texture(
+            "https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/sky/texture.png",
+            scene
+        )
+
         mesh.material.diffuseTexture = mod_texture
         mesh.material.useAlphaFromDiffuseTexture = true
         mesh.material.emissiveColor = new BABYLON.Color3.White()
@@ -151,12 +147,12 @@ function changeSky(BABYLON, scene){
         for (let i=0;i<48;i+=8){
             uvs[i+2] = uvs[i+4] = faces[i/8][0]
             uvs[i] = uvs[i+6] = faces[i/8][1]
-            
+
             uvs[i+1] = uvs[i+3] = 0
             uvs[i+5] = uvs[i+7] = 1
         }
         mesh.setVerticesData(BABYLON.VertexBuffer.UVKind, uvs);
-        
+
         scene.modded = true
     }
 }
