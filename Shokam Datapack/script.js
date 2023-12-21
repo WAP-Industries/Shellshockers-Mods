@@ -56,7 +56,6 @@ function changeTheme(){
             background-size: 100% 100%;   
         }
         :root{
-            color: white;
             --ss-lightoverlay: url("https://raw.githubusercontent.com/WAP-Industries/Shellshockers-Mods/main/Shokam%20Datapack/assets/themes/background.jpg");
             background-size: 100% 100%;
         }
